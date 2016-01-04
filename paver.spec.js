@@ -246,3 +246,68 @@ test('a.0.b should use object not array with value', function(t) {
   });
   t.end();
 });
+
+test('retain existing object', function(t) {
+  t.deepEqual(paver.set('a.b', 1, {
+    a: {
+      c: 2
+    }
+  }), {
+    a: {
+      b: 1,
+      c: 2
+    }
+  });
+  t.end();
+});
+
+test('retain existing nested object', function(t) {
+  t.deepEqual(paver.set('a.b.c', 1, {
+    a: {
+      b: {
+        d: 2
+      }
+    }
+  }), {
+    a: {
+      b: {
+        c: 1,
+        d: 2
+      }
+    }
+  });
+  t.end();
+});
+
+test('retain existing top level array', function(t) {
+  t.deepEqual(paver.set('[0].a', 1, [{
+    b: 2
+  }]), [{
+    a: 1,
+    b: 2
+  }]);
+  t.end();
+});
+
+test('retain existing array in object', function(t) {
+  t.deepEqual(paver.set('a[0].b', 1, {
+    a: [{
+      c: 2
+    }]
+  }), {
+    a: [{
+      b: 1,
+      c: 2
+    }]
+  });
+  t.end();
+});
+
+test('throws for array path that does not match given object', function(t) {
+  t.throws(paver.set.bind(null, 'a[0].b', 1, {
+    a: {
+      c: 2
+    }
+  }));
+  t.end();
+});

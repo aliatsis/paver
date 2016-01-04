@@ -28,7 +28,13 @@ function set(path, val, obj) {
 
     if (arrayMatches) {
       if (arrayMatches[1]) {
-        partRef = partRef[arrayMatches[1]] = [];
+        var existingRef = partRef[arrayMatches[1]];
+
+        if (!existingRef || Array.isArray(existingRef)) {
+          partRef = partRef[arrayMatches[1]] = existingRef || [];
+        } else {
+          throw new Error('paver: path structure does not match object provided');
+        }
       }
 
       part = arrayMatches[2];
