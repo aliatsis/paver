@@ -1,4 +1,5 @@
 var ARRAY_PART_REGEX = /^(.*?)\[(\d+)\]$/;
+var STRICT_ARRAY_PART_REGEX = /^\[\d+\]$/;
 
 module.exports = {
   set: set
@@ -43,7 +44,7 @@ function set(path, val, obj) {
     if (i === partsLen - 1) {
       partRef[part] = val;
     } else {
-      partRef[part] = partRef[part] || (ARRAY_PART_REGEX.test(parts[i + 1]) ? [] : {});
+      partRef[part] = partRef[part] || (STRICT_ARRAY_PART_REGEX.test(parts[i + 1]) ? [] : {});
       partRef = partRef[part];
     }
   }

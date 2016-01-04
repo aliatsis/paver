@@ -311,3 +311,18 @@ test('throws for array path that does not match given object', function(t) {
   }));
   t.end();
 });
+
+test('a[0].b[0]', function(t) {
+  var result = paver.set('a[0].b[0]', 1, {});
+
+  t.deepEqual(result, {
+    a: [{
+      b: [1]
+    }]
+  });
+
+  t.ok(Array.isArray(result.a), 'a is an Array');
+  t.ok(result.a[0].constructor = Object, 'a[0] is an Object');
+  t.ok(Array.isArray(result.a[0].b), 'a[0].b is an Array');
+  t.end();
+});
